@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import Button from "../components/elements/Button";
+import Button from "components/elements/Button";
 
 export default function ErrorPage() {
   return (
-    <section className="flex h-full min-h-screen items-center p-16">
-      <div className="container mx-auto my-8 flex flex-col items-center justify-center px-5">
+    <section className="container flex h-full min-h-screen items-center p-16">
+      <div className="mx-auto my-8 flex flex-col items-center justify-center px-5">
         <div className="max-w-md text-center">
           <h2 className="mb-8 text-9xl font-extrabold">
             <span className="sr-only">Error</span>404

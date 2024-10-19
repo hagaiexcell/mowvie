@@ -1,10 +1,14 @@
-import Card from "../elements/Card";
+import { Movie } from "types/MovieTypes";
+import Card from "../elements/Card/Card";
+import CardSkeleton from "components/elements/Card/CardSkeleton";
 
 interface CardListProps {
   variant: "lg" | "md";
+  list?: Movie[];
+  isLoading: boolean;
 }
 
-export default function CardsList({ variant }: CardListProps) {
+export default function CardsList({ variant, list, isLoading }: CardListProps) {
   const getGridClasses = () => {
     switch (variant) {
       case "lg":
@@ -14,13 +18,24 @@ export default function CardsList({ variant }: CardListProps) {
     }
   };
   return (
-    <div className={`mt-4 grid grid-cols-2 sm:grid-cols-2 gap-1 md:gap-4 ${getGridClasses()}`}>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+    <div
+      className={`mt-4 grid grid-cols-2 gap-1 sm:grid-cols-2 md:gap-4 ${getGridClasses()}`}
+    >
+      {isLoading ? (
+        Array.from({ length: 6 }).map((_, i) => (
+          <div key={i}>
+            <CardSkeleton />
+          </div>
+        ))
+      ) : list && list.length > 0 ? (
+        list.map((movie: Movie, i) => (
+          <div key={i}>
+            <Card movie={movie} />{" "}
+          </div>
+        ))
+      ) : (
+        <div>Tidak ada film yang tersedia</div>
+      )}
     </div>
   );
 }

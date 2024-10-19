@@ -1,10 +1,10 @@
-import CardsListLayout from "../components/layouts/CardsListLayout";
-import imgProfile from "../assets/icons/ic-profile.png";
-import Button from "../components/elements/Button";
+import CardsListLayout from "components/layouts/CardsListLayout";
+import imgProfile from "assets/icons/ic-profile.png";
+import Button from "components/elements/Button";
 
 export default function Profile() {
   return (
-    <div className="container">
+    <section className="container">
       <div className="grid grid-cols-1 md:grid-cols-12">
         <div className="col-span-4 border-b-[1px] border-gray-400 pb-6 md:border-r-[1px] md:pb-0">
           <div className="flex flex-col items-center space-y-10 px-8">
@@ -23,9 +23,9 @@ export default function Profile() {
           </div>
         </div>
         <div className="col-span-8">
-          <CardsListLayout variant={"md"} title="Now Playing Movies" />
+          {/* <CardsListLayout variant={"md"} title="Now Playing Movies" /> */}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
