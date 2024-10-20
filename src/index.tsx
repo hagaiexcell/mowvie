@@ -25,6 +25,20 @@ const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
   return children;
 };
 
+const ProtectedLoginRoute = ({
+  children,
+}: {
+  children: React.ReactElement;
+}) => {
+  const sessionId = localStorage.getItem("session_id");
+
+  if (sessionId) {
+    return <Navigate to="/" />; // Redirect to home if already logged in
+  }
+
+  return children;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,7 +64,11 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <ProtectedLoginRoute>
+            <Login />
+          </ProtectedLoginRoute>
+        ),
       },
       {
         path: "callback-page",
@@ -63,6 +81,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

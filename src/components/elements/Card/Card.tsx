@@ -28,9 +28,7 @@ export default function Card({ movie }: CardProps) {
       Swal.fire({
         title: "Sorry",
         icon: "error",
-        html: `
-          Please log in to add this movie to your favorites.
-        `,
+        html: `Please log in with your account to add this movie to your favorites.`,
         showCloseButton: true,
         showCancelButton: false,
         focusConfirm: false,
