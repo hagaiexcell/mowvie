@@ -7,6 +7,9 @@ import { AppDispatch } from "../store";
 import { getNowPlayingMovieList, getPopularMovieList } from "services/api";
 import { Movie } from "types/MovieTypes";
 
+const SCROLL_THRESHOLD = window.innerWidth < 900 ? 10 : 50;
+const MAX_TOTAL_MOVIES = 30;
+
 export default function Home() {
   const [nowPlayingMovieList, setNowPlayingMovieList] = useState<Movie[] | []>(
     [],
@@ -18,7 +21,6 @@ export default function Home() {
   const [totalMoviesLoaded, setTotalMoviesLoaded] = useState(0);
   const [isErrorNowPlaying, setIsErrorNowPlaying] = useState<boolean>(false);
   const [isErrorPopular, setIsErrorPopular] = useState<boolean>(false);
-
   const accountId = localStorage.getItem("account_id");
   const sessionId = localStorage.getItem("session_id");
   const dispatch = useDispatch<AppDispatch>();
@@ -38,7 +40,7 @@ export default function Home() {
   };
 
   const fetchPopularMovies = async (page: number, signal: AbortSignal) => {
-    if (totalMoviesLoaded >= 30) return;
+    if (totalMoviesLoaded >= MAX_TOTAL_MOVIES) return;
     setIsLoadingPopular(true);
     setIsErrorPopular(false);
     try {
@@ -56,7 +58,7 @@ export default function Home() {
   };
 
   const handleScroll = () => {
-    const scrollThreshold = window.innerWidth < 900 ? 10 : 50;
+    const scrollThreshold = SCROLL_THRESHOLD;
     if (
       window.innerHeight + window.scrollY >=
         document.body.offsetHeight - scrollThreshold &&
@@ -88,7 +90,6 @@ export default function Home() {
   }, [isLoadingPopular]);
 
   useEffect(() => {
- 
     if (accountId && sessionId) {
       dispatch(fetchFavoriteMovies({ accountId, sessionId }));
     }
