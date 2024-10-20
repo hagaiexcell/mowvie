@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/mowvie/static/css/main.60984dc9.css",
+    "main.js": "/mowvie/static/js/main.d9533049.js",
+    "static/media/ic-profile.png": "/mowvie/static/media/ic-profile.70e62af3e2edac7d4149.png",
+    "static/media/ic-star.png": "/mowvie/static/media/ic-star.d0cbd94e0a4a62fc2bf4.png",
+    "static/media/mowvie-logo.png": "/mowvie/static/media/mowvie-logo.816818466e91432d1826.png",
+    "static/media/ic-save.svg": "/mowvie/static/media/ic-save.96f3e3aec6a58de52dfc2370dd7c1f84.svg",
+    "static/media/ic-save-fill.svg": "/mowvie/static/media/ic-save-fill.01f69f6a2d1a15872d43528ea30c6f61.svg",
+    "index.html": "/mowvie/index.html",
+    "main.60984dc9.css.map": "/mowvie/static/css/main.60984dc9.css.map",
+    "main.d9533049.js.map": "/mowvie/static/js/main.d9533049.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.60984dc9.css",
+    "static/js/main.d9533049.js"
+  ]
+}
