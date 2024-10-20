@@ -17,7 +17,6 @@ const CallbackPage = () => {
     if (approved === "true" && requestToken) {
       getSessionId(requestToken)
         .then((sessionId) => {
-          console.log(sessionId, "sessionn");
           if (subscribed) {
             localStorage.setItem("session_id", sessionId);
             navigate("/");

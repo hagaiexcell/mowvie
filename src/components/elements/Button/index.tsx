@@ -4,7 +4,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function Button(props: ButtonProps) {
-  const { children, variant, classname } = props;
+  const { children, variant, classname, ...rest } = props;
 
   const variantClasses = {
     primary: "bg-primary text-white",
@@ -15,7 +15,7 @@ export default function Button(props: ButtonProps) {
     <button
       className={`${variantClasses[variant]} rounded-lg px-5 py-3 font-semibold leading-none transition-all duration-100 hover:bg-opacity-70 ${classname}`}
       type="submit"
-      {...props}
+      {...rest}
     >
       {children}
     </button>

@@ -17,7 +17,6 @@ export default function CardsListLayout({
   isLoading,
   isError,
 }: CardsListLayoutProps) {
-
   return (
     <section className="container">
       <h2>{title}</h2>

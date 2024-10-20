@@ -18,10 +18,36 @@ export const getRequestToken = async () => {
   }
 };
 
+export const createSessionLogin = async (
+  username: string,
+  password: string,
+  requestToken: string,
+) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/authentication/token/validate_with_login`,
+      {
+        username,
+        password,
+        request_token: requestToken,
+      },
+      {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+      },
+    );
+
+    return response.data.request_token;
+  } catch (error) {}
+};
+
 export const getSessionId = async (requestToken: string) => {
   try {
     const response = await axios.post(
-      "https://api.themoviedb.org/3/authentication/session/new",
+      `${baseUrl}/authentication/session/new`,
       {
         request_token: requestToken,
       },
@@ -37,6 +63,41 @@ export const getSessionId = async (requestToken: string) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const deleteSessionId = async (sessionId: string | null) => {
+  try {
+    const response = await axios.delete(
+      `${baseUrl}/authentication/session?session_id=${sessionId}`,
+      {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createGuestSession = async () => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/authentication/guest_session/new`,
+      {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+      },
+    );
+
+    return response.data.guest_session_id;
+  } catch (error) {}
 };
 
 export const getNowPlayingMovieList = async (
@@ -62,7 +123,6 @@ export const getNowPlayingMovieList = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.code === "ERR_CANCELED") {
-        console.log("Request was canceled:", error.message);
         return null;
       } else {
         console.error("Error fetching now playing movies:", error);
@@ -98,7 +158,6 @@ export const getPopularMovieList = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.code === "ERR_CANCELED") {
-        console.log("Request was canceled:", error.message);
         return null;
       } else {
         console.error("Error fetching Popular movies:", error);
@@ -122,9 +181,8 @@ export const getAccountDetail = async (sessionId: string | null) => {
         Authorization: `Bearer ${apiKey}`,
       },
     });
-    const accountId = response.data.id;
-    localStorage.setItem("account_id", accountId);
-    return accountId;
+
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -164,6 +222,7 @@ export const addToFavorite = async (
 export const getFavoriteMovies = async (
   accountId: string | null,
   sessionId: string | null,
+  signal?: AbortSignal,
 ) => {
   try {
     const response = await axios.get(
@@ -177,10 +236,20 @@ export const getFavoriteMovies = async (
         params: {
           session_id: sessionId,
         },
+        signal: signal,
       },
     );
     return response.data.results;
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.code === "ERR_CANCELED") {
+        return null;
+      } else {
+        console.error("Error fetching Popular movies:", error);
+        throw error;
+      }
+    }
+    console.error("Unknown error fetching Popular movies:", error);
     throw error;
   }
 };

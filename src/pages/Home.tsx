@@ -3,7 +3,7 @@ import CardsListLayout from "components/layouts/CardsListLayout";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchFavoriteMovies } from "../redux/FavoritesReducer";
-import { AppDispatch } from "store";
+import { AppDispatch } from "../store";
 import { getNowPlayingMovieList, getPopularMovieList } from "services/api";
 import { Movie } from "types/MovieTypes";
 
@@ -56,8 +56,10 @@ export default function Home() {
   };
 
   const handleScroll = () => {
+    const scrollThreshold = window.innerWidth < 900 ? 10 : 50;
     if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 5 &&
+      window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - scrollThreshold &&
       !isLoadingPopular
     ) {
       setPopularPage((prevPage) => prevPage + 1);
@@ -86,6 +88,7 @@ export default function Home() {
   }, [isLoadingPopular]);
 
   useEffect(() => {
+ 
     if (accountId && sessionId) {
       dispatch(fetchFavoriteMovies({ accountId, sessionId }));
     }

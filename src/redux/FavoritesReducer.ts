@@ -4,7 +4,7 @@ import { Movie } from "types/MovieTypes";
 
 interface FavoritesState {
   movies: Movie[];
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: "idle" | "loading" | "succeed" | "failed";
   error: string | null;
 }
 
@@ -34,6 +34,9 @@ const favoritesSlice = createSlice({
         state.movies.push(movie);
       }
     },
+    resetFavorites: (state) => {
+      state.movies = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -41,7 +44,7 @@ const favoritesSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchFavoriteMovies.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = "succeed";
         state.movies = action.payload;
       })
       .addCase(fetchFavoriteMovies.rejected, (state, action) => {
@@ -51,5 +54,5 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const { toggleFavorite } = favoritesSlice.actions;
+export const { toggleFavorite, resetFavorites } = favoritesSlice.actions;
 export default favoritesSlice.reducer;

@@ -9,6 +9,7 @@ import { addToFavorite } from "services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { toggleFavorite } from "../../../redux/FavoritesReducer";
+import Swal from "sweetalert2";
 
 interface CardProps {
   movie: Movie;
@@ -18,15 +19,24 @@ export default function Card({ movie }: CardProps) {
   const sessionId = localStorage.getItem("session_id") ?? null;
   const accountId = localStorage.getItem("account_id") ?? null;
   const dispatch = useDispatch();
-  const favoriteMovies = useSelector(
-    (state: RootState) => state.favorites.movies,
-  );
-  const isFavorite = favoriteMovies.some((fav) => fav.id === movie.id);
+  const { movies, status } = useSelector((state: RootState) => state.favorites);
+  const isFavorite = movies.some((fav) => fav.id === movie.id);
+  const baseimgUrl = process.env.REACT_APP_BASEIMGURL;
 
   const handleAddFavorite = async () => {
-    console.log(accountId);
     if (!accountId) {
-      alert("Account ID or Session ID is missing.");
+      Swal.fire({
+        title: "Sorry",
+        icon: "error",
+        html: `
+          Please log in to add this movie to your favorites.
+        `,
+        showCloseButton: true,
+        showCancelButton: false,
+        focusConfirm: false,
+
+        showConfirmButton: false,
+      });
       return;
     }
 
@@ -46,26 +56,6 @@ export default function Card({ movie }: CardProps) {
     }
   };
 
-  // const checkFavoriteMovie = async () => {
-  //   if (!accountId || !sessionId) {
-  //     return;
-  //   }
-
-  //   try {
-  //     const favoriteMovies = await getFavoriteMovies(accountId, sessionId);
-  //     const isFav = favoriteMovies.some(
-  //       (favMovie: Movie) => favMovie.id === movie.id,
-  //     );
-  //     setIsFavorite(isFav);
-  //   } catch (error) {
-  //     console.error("Error fetching favorite movies:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkFavoriteMovie();
-  // }, [accountId, sessionId, movie.id]);
-
   return (
     <div className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl p-2 text-center transition-all duration-300 hover:bg-[#303030]">
       <div className="relative h-full w-full">
@@ -73,11 +63,12 @@ export default function Card({ movie }: CardProps) {
           className="min-h-72 w-full rounded-xl object-cover transition-all duration-300 group-hover:brightness-50"
           src={
             movie.backdrop_path
-              ? `${process.env.REACT_APP_BASEIMGURL}/${movie.backdrop_path}`
+              ? `${baseimgUrl}/${movie.backdrop_path}`
               : emptyImg
           }
           alt={movie.original_title || "Movie image"}
         />
+
         <div onClick={handleAddFavorite}>
           <img
             width={36}
