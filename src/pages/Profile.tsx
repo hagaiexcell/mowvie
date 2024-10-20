@@ -30,7 +30,6 @@ export default function Profile() {
         }
         localStorage.removeItem("session_id");
         dispatch(resetFavorites());
-        navigate(0);
         navigate("/");
       } catch (error) {
         console.error("Logout failed", error);
@@ -85,7 +84,7 @@ export default function Profile() {
             </Button>
           </div>
         </div>
-        <div className="col-span-8 ">
+        <div className="col-span-8">
           {accountId ? (
             <CardsListLayout
               title="Favorite Movies"
@@ -95,8 +94,8 @@ export default function Profile() {
               variant={"md"}
             />
           ) : (
-            <div className="flex items-center justify-center w-full h-full">
-              <div className="py-5 md:py-0 md:px-5 text-lg">
+            <div className="flex h-full w-full items-center justify-center">
+              <div className="py-5 text-lg md:px-5 md:py-0">
                 You need to log in to access your favorite list.
               </div>
             </div>

@@ -45,7 +45,6 @@ export default function Login() {
       setError("Invalid username or password.");
     } finally {
       setLoading(false);
-      navigate(0);
     }
   };
 
