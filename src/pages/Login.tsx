@@ -102,7 +102,7 @@ export default function Login() {
                   value={password}
                 />
               </div>
-              {error && <p className="error">{error}</p>}
+              {error && <p className="mb-3">{error}</p>}
               <div className="flex justify-between gap-8 md:gap-16">
                 <Button
                   variant="secondary"
