@@ -55,10 +55,10 @@ export default function Card({ movie }: CardProps) {
   };
 
   return (
-    <div className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl p-2 text-center transition-all duration-300 hover:bg-[#303030]">
+    <div className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl p-2 text-center transition-all duration-300 md:hover:bg-[#303030]">
       <div className="relative h-full w-full">
         <img
-          className="min-h-72 w-full rounded-xl object-cover transition-all duration-300 group-hover:brightness-50"
+          className="min-h-72 w-full rounded-xl object-cover transition-all duration-300 md:group-hover:brightness-50"
           src={
             movie.backdrop_path
               ? `${baseimgUrl}/${movie.backdrop_path}`
@@ -70,13 +70,13 @@ export default function Card({ movie }: CardProps) {
         <div onClick={handleAddFavorite}>
           <img
             width={36}
-            className={`absolute right-2 top-2 opacity-100 transition-all duration-300 ${isFavorite ? "opacity-0" : "opacity-100"} hover:opacity-0`}
+            className={`absolute right-2 top-2 opacity-100 transition-all duration-300 ${isFavorite ? "opacity-0" : "opacity-100"} md:hover:opacity-0`}
             src={icSave}
             alt="Save Icon"
           />
           <img
             width={36}
-            className={`absolute right-2 top-2 opacity-0 transition-all duration-300 ${isFavorite ? "opacity-100" : "opacity-0"} hover:opacity-100`}
+            className={`absolute right-2 top-2 opacity-0 transition-all duration-300 ${isFavorite ? "opacity-100" : "opacity-0"} md:hover:opacity-100`}
             src={icSaveFill}
             alt="Save Icon Hover"
           />
