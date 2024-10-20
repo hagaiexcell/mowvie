@@ -19,7 +19,7 @@ export default function Card({ movie }: CardProps) {
   const sessionId = localStorage.getItem("session_id") ?? null;
   const accountId = localStorage.getItem("account_id") ?? null;
   const dispatch = useDispatch();
-  const { movies, status } = useSelector((state: RootState) => state.favorites);
+  const { movies } = useSelector((state: RootState) => state.favorites);
   const isFavorite = movies.some((fav) => fav.id === movie.id);
   const baseimgUrl = process.env.REACT_APP_BASEIMGURL;
 
